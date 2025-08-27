@@ -1,10 +1,9 @@
-# app.py  — 그대로 복붙해서 `streamlit run app.py` 실행
+# app.py
 import re
 from io import StringIO
 import pandas as pd
 import streamlit as st
 
-# 👉 여기에 네 CSV 원문을 그대로 붙여넣어도 됨 (줄바꿈 없어도, desc에 콤마 있어도 OK)
 RAW_CSV = """title,genre,mood,tempo,media,desc,link
 나 혼자만 레벨업,Action,긴장감 넘치는,빠른 전개,Webtoon,헌터 세계에서 각성한 주인공의 성장기,https://comic.naver.com
 신의 탑,Fantasy,미스터리,중간 속도,Webtoon,탑을 오르며 펼쳐지는 모험과 갈등,https://comic.naver.com
@@ -26,6 +25,28 @@ RAW_CSV = """title,genre,mood,tempo,media,desc,link
 스파이 패밀리,Comedy,따뜻한,중간 속도,Manga,가짜 가족의 스파이 코미디,https://www.shonenjump.com
 체인소맨,Horror,충격적,빠른 전개,Manga,체인소 악마와 소년의 사투,https://www.shonenjump.com
 원펀맨,Comedy,패러디적,빠른 전개,Webtoon,최강 히어로의 일상과 유머,https://comic.naver.com
+나빌레라,Drama,따뜻한,느긋한 전개,Webtoon,노년과 청년의 발레 도전기,https://comic.naver.com
+D.P.,Drama,현실적,중간 속도,Webtoon,군대 탈영병을 쫓는 병사의 이야기,https://comic.naver.com
+신도림,Sci-Fi,긴장감 넘치는,빠른 전개,Webtoon,가상현실과 현실을 넘나드는 전투,https://comic.naver.com
+덴마,Sci-Fi,신비로운,느긋한 전개,Webtoon,우주를 배경으로 한 서사시,https://comic.naver.com
+미생,Drama,현실적,중간 속도,Webtoon,직장인들의 애환과 성장,https://comic.naver.com
+킬링 스토킹,Horror,충격적,느린 전개,Webtoon,집착과 광기의 심리 스릴러,https://comic.naver.com
+호랑이형님,Fantasy,코믹,빠른 전개,Webtoon,호랑이와 인간들의 판타지 모험,https://comic.naver.com
+무빙,Superhero,감동적,중간 속도,Webtoon,초능력을 가진 가족들의 이야기,https://comic.naver.com
+싸움독학,Action,열혈,빠른 전개,Webtoon,평범한 소년의 싸움 성장기,https://comic.naver.com
+테러맨,Thriller,불안한,빠른 전개,Webtoon,불운한 소년이 테러와 맞서는 이야기,https://comic.naver.com
+연의 편지,Romance,감동적,느긋한 전개,Webtoon,편지를 통해 이어지는 청춘의 사랑,https://comic.naver.com
+나이트런,Sci-Fi,장대한,빠른 전개,Webtoon,우주 전쟁을 그린 장편 서사,https://comic.naver.com
+패션왕,Comedy,병맛,빠른 전개,Webtoon,평범한 소년의 패션 도전기,https://comic.naver.com
+외모지상주의,Drama,청춘,빠른 전개,Webtoon,외모가 바뀐 소년의 학교 생활,https://comic.naver.com
+갓 오브 하이스쿨,Action,격투,빠른 전개,Webtoon,전국 고등학생들의 무투대회,https://comic.naver.com
+신과 함께,Fantasy,감동적,중간 속도,Webtoon,사후 세계를 그린 대서사시,https://comic.naver.com
+블랙클로버,Fantasy,열정적,빠른 전개,Manga,마법 없는 소년의 마법제 도전,https://www.shonenjump.com
+약속의 네버랜드,Thriller,불안한,빠른 전개,Manga,고아원의 비밀을 파헤치는 아이들,https://www.shonenjump.com
+은혼,Comedy,패러디,중간 속도,Manga,사무라이와 외계인이 공존하는 시대극,https://www.shonenjump.com
+죠죠의 기묘한 모험,Adventure,독특한,빠른 전개,Manga,세대를 거듭하는 기묘한 전투,https://www.shonenjump.com
+도쿄구울,Horror,어두운,중간 속도,Manga,반인간·반구울 소년의 고뇌,https://www.shonenjump.com
+강철의 연금술사,Fantasy,철학적,빠른 전개,Manga,연금술사 형제의 여정,https://www.shonenjump.com
 """
 
 # --------------------------- 파서 (CSV가 망가져 있어도 전부 복구) ---------------------------
