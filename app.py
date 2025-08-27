@@ -4,7 +4,7 @@ import pandas as pd
 from io import StringIO
 
 # ------------------------------------------------------------
-# 내장 데이터셋 (100개, 장르/분위기/매체 다양화)
+# 내장 데이터셋 (다양한 작품들 포함)
 # ------------------------------------------------------------
 RAW_CSV = """title,genre,mood,tempo,media,desc,link
 나 혼자만 레벨업,Action,긴장감 넘치는,빠른 전개,Webtoon,헌터 세계에서 각성한 주인공의 성장기,https://comic.naver.com
@@ -27,25 +27,6 @@ RAW_CSV = """title,genre,mood,tempo,media,desc,link
 스파이 패밀리,Comedy,따뜻한,중간 속도,Manga,가짜 가족의 스파이 코미디,https://www.shonenjump.com
 체인소맨,Horror,충격적,빠른 전개,Manga,체인소 악마와 소년의 사투,https://www.shonenjump.com
 원펀맨,Comedy,패러디적,빠른 전개,Webtoon,최강 히어로의 일상과 유머,https://comic.naver.com
-토리코,Cooking,열정적,빠른 전개,Manga,맛과 모험을 동시에 추구하는 헌터 이야기,https://www.shonenjump.com
-은혼,Comedy,패러디,느긋한 전개,Manga,막부시대와 패러디 코미디의 절묘한 조합,https://www.shonenjump.com
-도쿄 구울,Horror,어두운,빠른 전개,Manga,인간과 구울의 경계에서 살아가는 소년,https://www.shonenjump.com
-클로저스,Sci-Fi,긴장감 넘치는,빠른 전개,Webtoon,차원 수호자의 SF 액션,https://comic.naver.com
-리제로,Fantasy,절망적,중간 속도,LightNovel,죽음을 반복하며 운명을 바꾸려는 소년,https://novel.com
-소드 아트 온라인,Sci-Fi,모험적,빠른 전개,LightNovel,가상 세계 MMORPG 속 생존기,https://novel.com
-코난,Mystery,지적인,중간 속도,Manga,명탐정 코난의 추리 이야기,https://www.shonenjump.com
-금색의 갓슈,Adventure,밝은,중간 속도,Manga,마계 아이들의 파트너 전투기,https://www.shonenjump.com
-이누야샤,Fantasy,로맨틱,중간 속도,Manga,시대와 세계를 넘는 사랑과 모험,https://www.shonenjump.com
-블랙클로버,Fantasy,열정적,빠른 전개,Manga,마법제국을 향한 소년의 꿈,https://www.shonenjump.com
-원아웃,Sports,두뇌전,중간 속도,Manga,야구와 심리전의 조화,https://www.shonenjump.com
-베르세르크,DarkFantasy,잔혹한,느린 전개,Manga,끝없는 전쟁과 복수의 서사,https://www.shonenjump.com
-아이실드21,Sports,유쾌한,빠른 전개,Manga,미식축구를 통한 성장 이야기,https://www.shonenjump.com
-헌터x헌터,Adventure,다채로운,중간 속도,Manga,헌터가 되기 위한 소년의 여정,https://www.shonenjump.com
-바람의 검심,Historical,감동적,중간 속도,Manga,막부말 일본의 검객 이야기,https://www.shonenjump.com
-은하철도999,Sci-Fi,철학적,느린 전개,Manga,영원한 생명을 찾아 떠나는 소년,https://www.shonenjump.com
-스즈미야 하루히,Comedy,엉뚱한,중간 속도,LightNovel,평범하지 않은 여고생의 일상,https://novel.com
-달빛조각사,Fantasy,게임적,중간 속도,WebNovel,게임 속 모험과 성장,https://novel.com
-... (중략, 총 100개 데이터)
 """
 
 # ------------------------------------------------------------
@@ -83,7 +64,7 @@ st.markdown("""
 # 헤더
 # ------------------------------------------------------------
 st.title("📚 나에게 딱 맞는 만화 · 웹툰 추천기")
-st.caption("👉 100개 작품 데이터 내장 · 다양한 장르/분위기/매체 선택 가능")
+st.caption("👉 질문 몇 개로 바로 추천받기 · 데이터 내장형 · CSV 파일 불필요")
 
 st.divider()
 
